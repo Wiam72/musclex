@@ -1,9 +1,9 @@
 import sys
 import os
 from os.path import join
-from PyQt5.QtWidgets import QDialogButtonBox, QDoubleSpinBox, QSlider, QGridLayout, QCheckBox, QDialog, QPushButton, QLabel, QSpinBox, QStatusBar, QVBoxLayout, QFileDialog, QWidget
-from PyQt5.QtGui import QPixmap, QImage
-from PyQt5.QtCore import Qt
+from PyQt6.QtWidgets import QDialogButtonBox, QDoubleSpinBox, QSlider, QGridLayout, QCheckBox, QDialog, QPushButton, QLabel, QSpinBox, QStatusBar, QVBoxLayout, QFileDialog, QWidget
+from PyQt6.QtGui import QPixmap, QImage
+from PyQt6.QtCore import Qt
 import numpy as np
 import subprocess
 import glob

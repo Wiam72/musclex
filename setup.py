@@ -75,11 +75,11 @@ setup(
         'scipy>=1.12.0',
         'matplotlib<3.7,>=3.6.3',
         'opencv-python-headless<=4.7.0.72',
-        'PyQt5<=5.15.9',
+        'PyQt6==6.7.1',
         'pyFAI<=2023.2.0',
         'distro<=1.8.0',
         'PyMca5<=5.8.1',
-        'numba>=0.59.0',
+        'numba>=0.60.0',
         'fisx<=1.2.1',
         'future<=0.18.3',
 

@@ -168,7 +168,7 @@ https://www.github.com/biocatiit/musclex/issues</a>.""")
         app = QApplication(sys.argv)
         window = LauncherForm()
         window.show()
-        sys.exit(app.exec_())
+        sys.exit(app.exec())
 
 class TestDialog(QDialog):
     """

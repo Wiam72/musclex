@@ -50,7 +50,7 @@ from ..csv_manager import EQ_CSVManager
 from ..ui.EQ_FittingTab import EQ_FittingTab
 from .BlankImageSettings import BlankImageSettings
 from skimage.morphology import binary_dilation
-from PyQt5.QtCore import QRunnable, QThreadPool, QEventLoop, pyqtSignal
+from PyQt6.QtCore import QRunnable, QThreadPool, QEventLoop, pyqtSignal
 from queue import Queue
 
 class Worker(QRunnable):
@@ -171,7 +171,7 @@ class EquatorWindow(QMainWindow):
         errMsg.setInformativeText("Please select non empty failedcases.txt or an image\n\n")
         errMsg.setStandardButtons(QMessageBox.Ok)
         errMsg.setIcon(QMessageBox.Warning)
-        errMsg.exec_()
+        errMsg.exec()
         # self.close()
         self.browseFile()
 
@@ -581,7 +581,7 @@ class EquatorWindow(QMainWindow):
         self.fiberResultTable.horizontalHeader().setStretchLastSection(True)
         self.fiberResultTable.setColumnWidth(0, 150)
         self.fiberResultTable.setColumnWidth(1, 350)
-        self.fiberResultTable.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.fiberResultTable.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.resultLayout.addWidget(self.generalResults)
         # self.resultLayout.addWidget(self.generalResultTable)
         self.resultLayout.addWidget(QLabel("<h2>Fitting Results</h2>"))
@@ -906,7 +906,7 @@ class EquatorWindow(QMainWindow):
             errMsg.setInformativeText("Please process the image first before using previous fit")
             errMsg.setStandardButtons(QMessageBox.Ok)
             errMsg.setIcon(QMessageBox.Warning)
-            errMsg.exec_()
+            errMsg.exec()
             return -1
         paramInfo = self.bioImg.info['paramInfo']
         settings = self.getSettings()
@@ -1038,7 +1038,7 @@ class EquatorWindow(QMainWindow):
         errMsg.setInformativeText(text)
         errMsg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         errMsg.setIcon(QMessageBox.Warning)
-        ret = errMsg.exec_()
+        ret = errMsg.exec()
 
         # If "yes" is pressed
         if ret == QMessageBox.Yes:
@@ -1124,7 +1124,7 @@ class EquatorWindow(QMainWindow):
         Trigger when Set Blank Image and Mask clicked
         """
         dlg = BlankImageSettings(self.dir_path)
-        result = dlg.exec_()
+        result = dlg.exec()
         if result == 1 and self.bioImg is not None:
             self.resetAll()
 
@@ -1385,7 +1385,7 @@ class EquatorWindow(QMainWindow):
                                       'F : Process current folder\n'
                                       'Q : close window\n')
         keysDialog.setStandardButtons(QMessageBox.Ok)
-        keysDialog.exec_()
+        keysDialog.exec()
 
     def showAbout(self):
         """
@@ -1408,7 +1408,7 @@ class EquatorWindow(QMainWindow):
                        "Send Feedback or Issues : <br>" +
                        "<a href='{0}'>{0}</a><br><br>".format("https://github.com/biocatiit/musclex/issues"))
         msgBox.setStandardButtons(QMessageBox.Ok)
-        msgBox.exec_()
+        msgBox.exec()
 
     def imgScrolled(self, event):
         """
@@ -1485,7 +1485,7 @@ class EquatorWindow(QMainWindow):
                 errMsg.setInformativeText("Please select only failedcases.txt or an image\n\n")
                 errMsg.setStandardButtons(QMessageBox.Ok)
                 errMsg.setIcon(QMessageBox.Warning)
-                errMsg.exec_()
+                errMsg.exec()
             else:
                 self.mainWindow.runBioMuscle(str(file_name))
 
@@ -1620,7 +1620,7 @@ class EquatorWindow(QMainWindow):
         errMsg.setInformativeText(text)
         errMsg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         errMsg.setIcon(QMessageBox.Warning)
-        ret = errMsg.exec_()
+        ret = errMsg.exec()
 
         # If "yes" is pressed
         if ret == QMessageBox.Yes:
@@ -1721,7 +1721,7 @@ class EquatorWindow(QMainWindow):
         errMsg.setInformativeText(text)
         errMsg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         errMsg.setIcon(QMessageBox.Warning)
-        ret = errMsg.exec_()
+        ret = errMsg.exec()
 
         # If "yes" is pressed
         if ret == QMessageBox.Yes:
@@ -1777,7 +1777,7 @@ class EquatorWindow(QMainWindow):
         print('cal_setting is:',cal_setting)
         if cal_setting is not None or force:
 
-            result = self.calibSettingDialog.exec_()
+            result = self.calibSettingDialog.exec()
             logMsgs = self.calibSettingDialog.logMsgs
             if result == 1:
                 self.calSettings = self.calibSettingDialog.getValues()
@@ -1796,7 +1796,7 @@ class EquatorWindow(QMainWindow):
                     msg.setStandardButtons(QMessageBox.Ok)
                     msg.setWindowTitle("Unchecking Use Previous fit")
                     msg.setStyleSheet("QLabel{min-width: 500px;}")
-                    msg.exec_()
+                    msg.exec()
                     self.use_previous_fit_chkbx.setChecked(False)
 
                 for msg in logMsgs:
@@ -2383,7 +2383,7 @@ class EquatorWindow(QMainWindow):
                 msg.setStandardButtons(QMessageBox.Ok)
                 msg.setWindowTitle("Mode Orientation Failed")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
-                msg.exec_()
+                msg.exec()
                 return
 
     def getModeRotation(self):
@@ -2584,7 +2584,7 @@ class EquatorWindow(QMainWindow):
                 msg.setWindowTitle("Double Zoom Guide")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
                 msg.setCheckBox(dontShowAgainDoubleZoomMessage)
-                msg.exec_()
+                msg.exec()
                 self.dontShowAgainDoubleZoomMessageResult = dontShowAgainDoubleZoomMessage.isChecked()
             self.doubleZoomMode = False
             return
@@ -3462,7 +3462,7 @@ class EquatorWindow(QMainWindow):
             errMsg.setStandardButtons(QMessageBox.Ok)
             errMsg.setIcon(QMessageBox.Warning)
             errMsg.setFixedWidth(300)
-            errMsg.exec_()
+            errMsg.exec()
             raise
 
         # self.updateParams()
@@ -3490,7 +3490,7 @@ class EquatorWindow(QMainWindow):
 
             self.currentTask = Worker(bioImg, settings, paramInfo, self.onProcessingFinished)
             self.threadPool.start(self.currentTask)
-            self.loop.exec_()
+            self.loop.exec()
         
     def onProcessingFinished(self, bioImg):
         print("Processing finished")
@@ -4191,7 +4191,7 @@ class EquatorWindow(QMainWindow):
                     msg.setStandardButtons(QMessageBox.Ok)
                     msg.setWindowTitle("Incorrect Peak Number")
                     msg.setStyleSheet("QLabel{min-width: 500px;}")
-                    msg.exec_()
+                    msg.exec()
                 else:
                     ind = self.parameterEditorTable.rowCount()
                     self.parameterEditorTable.insertRow(ind)
@@ -4253,7 +4253,7 @@ class EquatorWindow(QMainWindow):
             errMsg.setStandardButtons(QMessageBox.Ok)
             errMsg.setIcon(QMessageBox.Warning)
             errMsg.setFixedWidth(300)
-            errMsg.exec_()
+            errMsg.exec()
             raise
 
         self.updateParams()

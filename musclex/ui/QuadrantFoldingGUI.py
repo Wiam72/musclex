@@ -37,7 +37,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from PIL import Image
 from musclex import __version__
-from PyQt5.QtCore import QRunnable, QThreadPool, QEventLoop, pyqtSignal
+from PyQt6.QtCore import QRunnable, QThreadPool, QEventLoop, pyqtSignal
 from queue import Queue
 import fabio
 from ..utils.file_manager import *
@@ -156,7 +156,7 @@ class QuadrantFoldingGUI(QMainWindow):
 
         self.verImgLayout = QVBoxLayout()
         # self.verImgLayout.setContentsMargins(0, 0, 0, 0)
-        self.verImgLayout.setAlignment(Qt.AlignCenter)
+        self.verImgLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selectImageButton = QPushButton('Click Here to Select an Image...')
         self.selectImageButton.setFixedHeight(100)
         self.selectImageButton.setFixedWidth(300)
@@ -891,7 +891,7 @@ class QuadrantFoldingGUI(QMainWindow):
         Trigger when Set Blank Image and Mask clicked
         """
         dlg = BlankImageSettings(self.filePath)
-        result = dlg.exec_()
+        result = dlg.exec()
         if result == 1 and self.quadFold is not None:
             self.quadFold.delCache()
             fileName = self.imgList[self.currentFileNumber]
@@ -1116,7 +1116,7 @@ class QuadrantFoldingGUI(QMainWindow):
         self.calSettings = None
         cal_setting = self.calSettingsDialog.calSettings
         if cal_setting is not None or force:
-            result = self.calSettingsDialog.exec_()
+            result = self.calSettingsDialog.exec()
             if result == 1:
                 self.calSettings = self.calSettingsDialog.getValues()
 
@@ -1267,7 +1267,7 @@ class QuadrantFoldingGUI(QMainWindow):
                 msg.setWindowTitle("Double Zoom Guide")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
                 msg.setCheckBox(dontShowAgainDoubleZoomMessage)
-                msg.exec_()
+                msg.exec()
                 self.dontShowAgainDoubleZoomMessageResult = dontShowAgainDoubleZoomMessage.isChecked()
             self.doubleZoomMode = False
             return
@@ -2159,7 +2159,7 @@ class QuadrantFoldingGUI(QMainWindow):
                 msg.setStandardButtons(QMessageBox.Ok)
                 msg.setWindowTitle("Mode Orientation Failed")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
-                msg.exec_()
+                msg.exec()
 
     def getModeRotation(self):
         """
@@ -2578,7 +2578,7 @@ class QuadrantFoldingGUI(QMainWindow):
                 errMsg.setStandardButtons(QMessageBox.Ok)
                 errMsg.setIcon(QMessageBox.Warning)
                 errMsg.setFixedWidth(300)
-                errMsg.exec_()
+                errMsg.exec()
                 raise
             
             # self.updateParams()
@@ -2611,7 +2611,7 @@ class QuadrantFoldingGUI(QMainWindow):
             quadFold, flags = self.tasksQueue.get()
             self.currentTask = Worker(quadFold, flags, self.onProcessingFinished)
             self.threadPool.start(self.currentTask)
-            self.loop.exec_()
+            self.loop.exec()
         
     def onProcessingFinished(self, quadFold):
         print("Processing finished")
@@ -2820,7 +2820,7 @@ class QuadrantFoldingGUI(QMainWindow):
                 msg.setStandardButtons(QMessageBox.Ok)
                 msg.setWindowTitle("Error Creating CSVManager")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
-                msg.exec_()
+                msg.exec()
             if self.csvManager is not None:
                 self.numberOfFiles = len(self.imgList)
                 self.ignoreFolds = set()
@@ -2981,7 +2981,7 @@ class QuadrantFoldingGUI(QMainWindow):
         errMsg.setInformativeText(text)
         errMsg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         errMsg.setIcon(QMessageBox.Warning)
-        ret = errMsg.exec_()
+        ret = errMsg.exec()
 
         # If "yes" is pressed
         if ret == QMessageBox.Yes:
@@ -3057,7 +3057,7 @@ class QuadrantFoldingGUI(QMainWindow):
         errMsg.setInformativeText(text)
         errMsg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         errMsg.setIcon(QMessageBox.Warning)
-        ret = errMsg.exec_()
+        ret = errMsg.exec()
 
         # If "yes" is pressed
         if ret == QMessageBox.Yes:
@@ -3185,5 +3185,5 @@ class QuadrantFoldingGUI(QMainWindow):
                        "Send Feedback or Issues : <br>" +
                        "<a href='{0}'>{0}</a><br><br>".format("https://github.com/biocatiit/musclex/issues"))
         msgBox.setStandardButtons(QMessageBox.Ok)
-        msgBox.exec_()
+        msgBox.exec()
         

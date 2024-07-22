@@ -168,7 +168,7 @@ class CalibrationSettings(QDialog):
         self.calImageLayout.addWidget(self.maxIntLabel, 2, 2, 1, 1)
         self.calImageLayout.addWidget(self.maxInt, 2, 3, 1, 1)
         self.calImageLayout.addWidget(self.manualCal, 3, 0, 1, 2)
-        self.calImageLayout.addWidget(QLabel("Calibrant ring d-spacing :"), 3, 2, 1, 1, Qt.AlignRight)
+        self.calImageLayout.addWidget(QLabel("Calibrant ring d-spacing :"), 3, 2, 1, 1, Qt.AlignmentFlag.AlignRight)
         self.calImageLayout.addWidget(self.silverBehenate, 3, 3, 1, 1)
         # self.calImageLayout.setColumnStretch(1,2)
         self.calImageLayout.setRowStretch(1, 2)
@@ -264,8 +264,8 @@ class CalibrationSettings(QDialog):
         self.mainLayout.addWidget(self.detectorChoice)
         self.mainLayout.addWidget(self.misSettingChkBx)
         self.mainLayout.addWidget(self.buttons)
-        self.mainLayout.setAlignment(Qt.AlignCenter)
-        self.mainLayout.setAlignment(self.buttons, Qt.AlignCenter)
+        self.mainLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.mainLayout.setAlignment(self.buttons, Qt.AlignmentFlag.AlignCenter)
 
         self.calImgFigure.canvas.mpl_connect('button_press_event', self.imgClicked)
         self.calImgFigure.canvas.mpl_connect('motion_notify_event', self.imgOnMotion)
@@ -358,7 +358,7 @@ class CalibrationSettings(QDialog):
                 errMsg.setInformativeText('Please select at least 5 points')
                 errMsg.setStandardButtons(QMessageBox.Ok)
                 errMsg.setIcon(QMessageBox.Warning)
-                errMsg.exec_()
+                errMsg.exec()
                 self.manualCal.setChecked(True)
             else:
                 self.manualCal.setText("Set calibration by points selections")
@@ -385,7 +385,7 @@ class CalibrationSettings(QDialog):
                 msg.setWindowTitle("Double Zoom Guide")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
                 msg.setCheckBox(dontShowAgainDoubleZoomMessage)
-                msg.exec_()
+                msg.exec()
                 self.dontShowAgainDoubleZoomMessageResult = dontShowAgainDoubleZoomMessage.isChecked()
             self.doubleZoomMode = False
         else:
@@ -577,7 +577,7 @@ class CalibrationSettings(QDialog):
                         'Circle could not be found. Please select 4 points on the circle.')
                     errMsg.setStandardButtons(QMessageBox.Ok)
                     errMsg.setIcon(QMessageBox.Warning)
-                    errMsg.exec_()
+                    errMsg.exec()
                     return
 
             # cali_radius = int(np.round(cali_radius / 2.))

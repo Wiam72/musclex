@@ -55,54 +55,54 @@ def main(arguments=None):
             app = QApplication(sys.argv)
             from musclex.ui.EQStartWindow import EQStartWindow
             myapp = EQStartWindow() # Even if 'myapp' isn't used after, it is necessary for the windows to show on the screen
-            sys.exit(app.exec_())
+            sys.exit(app.exec())
         elif prog == 'qf':
             app = QApplication(sys.argv)
             from musclex.ui.QuadrantFoldingGUI import QuadrantFoldingGUI
             myapp = QuadrantFoldingGUI()
-            sys.exit(app.exec_())
+            sys.exit(app.exec())
         elif prog == 'di':
             app = QApplication(sys.argv)
             from musclex.ui.ScanningDiffractionGUI import \
                 ScanningDiffractionGUI
             myapp = ScanningDiffractionGUI()
-            sys.exit(app.exec_())
+            sys.exit(app.exec())
         elif prog == 'dc':
             from musclex.ui.diffraction_centroids import \
                 DiffractionCentroidStartWindow
             app = QApplication(sys.argv)
             myapp = DiffractionCentroidStartWindow()
-            sys.exit(app.exec_())
+            sys.exit(app.exec())
         elif prog == 'ddf':
             from musclex.ui.ddf_processor import DDFWindow
             app = QApplication(sys.argv)
             myapp = DDFWindow()
-            sys.exit(app.exec_())
+            sys.exit(app.exec())
         elif prog == 'pt':
             from musclex.ui.ProjectionTracesGUI import ProjectionTracesGUI
             app = QApplication(sys.argv)
             myapp = ProjectionTracesGUI()
-            sys.exit(app.exec_())
+            sys.exit(app.exec())
         elif prog == 'aise':
             from musclex.ui.AddIntensitiesSingleExp import AddIntensitiesSingleExp
             app = QApplication(sys.argv)
             myapp = AddIntensitiesSingleExp()
-            sys.exit(app.exec_())
+            sys.exit(app.exec())
         elif prog == 'aime':
             from musclex.ui.AddIntensitiesMultExp import AddIntensitiesMultExp
             app = QApplication(sys.argv)
             myapp = AddIntensitiesMultExp()
-            sys.exit(app.exec_())
+            sys.exit(app.exec())
         elif prog == 'xv':
             from musclex.ui.XRayViewerGUI import XRayViewerGUI
             app = QApplication(sys.argv)
             myapp = XRayViewerGUI()
-            sys.exit(app.exec_())
+            sys.exit(app.exec())
         elif prog == 'gui':
             from musclex.launcher import LauncherForm
             app = QApplication(sys.argv)
             myapp = LauncherForm.main()
-            sys.exit(app.exec_())
+            sys.exit(app.exec())
         elif prog == 'test_global':
             suite = unittest.TestSuite()
             suite.addTest(MuscleXGlobalTester("testHeadlessMarEquator"))

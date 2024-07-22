@@ -38,7 +38,7 @@ import matplotlib.patches as patches
 from matplotlib.colors import LogNorm, Normalize
 import numpy as np
 import cv2
-from PyQt5.QtCore import QRunnable, QThreadPool, QEventLoop, pyqtSignal
+from PyQt6.QtCore import QRunnable, QThreadPool, QEventLoop, pyqtSignal
 from queue import Queue
 from musclex import __version__
 from ..utils.file_manager import fullPath, getImgFiles, createFolder
@@ -111,9 +111,9 @@ class BoxDetails(QDialog):
         if not self.oriented:
             self.boxLayout.addWidget(QLabel("Axis of Projection : "), 2, 0, 1, 1)
             self.boxLayout.addWidget(self.axisChoice, 2, 1, 1, 1)
-            self.boxLayout.addWidget(self.bottons, 3, 0, 1, 2, Qt.AlignCenter)
+            self.boxLayout.addWidget(self.bottons, 3, 0, 1, 2, Qt.AlignmentFlag.AlignCenter)
         else:
-            self.boxLayout.addWidget(self.bottons, 2, 0, 1, 2, Qt.AlignCenter)
+            self.boxLayout.addWidget(self.bottons, 2, 0, 1, 2, Qt.AlignmentFlag.AlignCenter)
 
     def okClicked(self):
         """
@@ -126,14 +126,14 @@ class BoxDetails(QDialog):
             errMsg.setInformativeText('Please specify the box name')
             errMsg.setStandardButtons(QMessageBox.Ok)
             errMsg.setIcon(QMessageBox.Warning)
-            errMsg.exec_()
+            errMsg.exec()
         elif box_name in self.box_names:
             errMsg = QMessageBox()
             errMsg.setText('Adding a box Error')
             errMsg.setInformativeText(box_name+' has already been added. Please select another name')
             errMsg.setStandardButtons(QMessageBox.Ok)
             errMsg.setIcon(QMessageBox.Warning)
-            errMsg.exec_()
+            errMsg.exec()
         else:
             self.accept()
 
@@ -542,7 +542,7 @@ class ProjectionTracesGUI(QMainWindow):
         Trigger when Set Blank Image and Mask clicked
         """
         dlg = BlankImageSettings(self.dir_path)
-        result = dlg.exec_()
+        result = dlg.exec()
         if result == 1 and self.projProc is not None:
             self.masked = False
             print("Blank setting clicked")
@@ -583,7 +583,7 @@ class ProjectionTracesGUI(QMainWindow):
         self.calSettings = None
         cal_setting = self.calSettingsDialog.calSettings
         if cal_setting is not None or force:
-            result = self.calSettingsDialog.exec_()
+            result = self.calSettingsDialog.exec()
             if result == 1:
                 self.calSettings = self.calSettingsDialog.getValues()
                 return True
@@ -960,7 +960,7 @@ class ProjectionTracesGUI(QMainWindow):
         errMsg.setInformativeText(text)
         errMsg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         errMsg.setIcon(QMessageBox.Warning)
-        ret = errMsg.exec_()
+        ret = errMsg.exec()
 
         # If "yes" is pressed
         if ret == QMessageBox.Yes:
@@ -1018,7 +1018,7 @@ class ProjectionTracesGUI(QMainWindow):
         errMsg.setInformativeText(text)
         errMsg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         errMsg.setIcon(QMessageBox.Warning)
-        ret = errMsg.exec_()
+        ret = errMsg.exec()
 
         # If "yes" is pressed
         if ret == QMessageBox.Yes:
@@ -1285,7 +1285,7 @@ class ProjectionTracesGUI(QMainWindow):
                 msg.setWindowTitle("Double Zoom Guide")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
                 msg.setCheckBox(dontShowAgainDoubleZoomMessage)
-                msg.exec_()
+                msg.exec()
                 self.dontShowAgainDoubleZoomMessageResult = dontShowAgainDoubleZoomMessage.isChecked()
             self.doubleZoomMode = False
             return
@@ -1317,7 +1317,7 @@ class ProjectionTracesGUI(QMainWindow):
                 x2 = int(round(max(points[0][0], points[1][0])))
                 y2 = int(round(max(points[0][1], points[1][1])))
                 boxDialog = BoxDetails(self.allboxes.keys())
-                result = boxDialog.exec_()
+                result = boxDialog.exec()
                 if result == 1:
                     name, bgsub, axis = boxDialog.getDetails()
                     self.allboxes[name] = ((x1, x2), (y1, y2))
@@ -1413,7 +1413,7 @@ class ProjectionTracesGUI(QMainWindow):
                     self.displayImgCanvas.draw_idle()
 
                     boxDialog = BoxDetails(self.allboxes.keys(), oriented=True)
-                    result = boxDialog.exec_()
+                    result = boxDialog.exec()
                     if result == 1:
                         # get the image the box was selected on
                         if self.rotated:
@@ -2202,7 +2202,7 @@ class ProjectionTracesGUI(QMainWindow):
             errMsg.setStandardButtons(QMessageBox.Ok)
             errMsg.setIcon(QMessageBox.Warning)
             errMsg.setFixedWidth(300)
-            errMsg.exec_()
+            errMsg.exec()
             raise
 
         self.resetUI()
@@ -2227,7 +2227,7 @@ class ProjectionTracesGUI(QMainWindow):
             projProc, settings = self.tasksQueue.get()
             self.currentTask = Worker(projProc, settings, self.onProcessingFinished)
             self.threadPool.start(self.currentTask)
-            self.loop.exec_()
+            self.loop.exec()
         
     def onProcessingFinished(self, projProc):
         print("Processing finished")
@@ -2541,4 +2541,4 @@ class ProjectionTracesGUI(QMainWindow):
                        "Send Feedback or Issues : <br>" +
                        "<a href='{0}'>{0}</a><br><br>".format("https://github.com/biocatiit/musclex/issues"))
         msgBox.setStandardButtons(QMessageBox.Ok)
-        msgBox.exec_()
+        msgBox.exec()
