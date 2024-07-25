@@ -1,4 +1,3 @@
-
 import os
 import sys
 import fabio
@@ -67,7 +66,7 @@ class CalibrationDialog(QMainWindow):
         # Options Layout
         self.optionsWidget = QWidget()
         self.optionsLayout = QVBoxLayout()
-        self.optionsLayout.setAlignment(Qt.AlignCenter)
+        self.optionsLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.optionsWidget.setLayout(self.optionsLayout)
         
         # Mode Group
@@ -87,7 +86,7 @@ class CalibrationDialog(QMainWindow):
         # Display Options
         self.displayOptGrpBx = QGroupBox()
         self.displayOptGrpBx.setTitle("Display Options")
-        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.displayOptGrpBx.setStyleSheet("QGroupBox {font-weight: bold;}")
         self.dispOptLayout = QGridLayout()
 
@@ -232,11 +231,11 @@ class CalibrationDialog(QMainWindow):
         
         self.saveButton = QPushButton("Correct Center and Orientation")
         # self.saveButton.setStyleSheet("background-color: green; color: white;")
-        self.saveButton.setIcon(self.style().standardIcon(QStyle.SP_DialogOkButton))
+        self.saveButton.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_DialogOkButton))
         
         self.cancelButton = QPushButton("Cancel")
         self.cancelButton.setStyleSheet("background-color: red; color: white;")
-        self.cancelButton.setIcon(self.style().standardIcon(QStyle.SP_DialogCancelButton))
+        self.cancelButton.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_DialogCancelButton))
         
         # Add Widgets to Options Layout
         
@@ -387,7 +386,7 @@ class CalibrationDialog(QMainWindow):
         if self.calSettingsDialog is None:
             self.calSettingsDialog = CalibrationSettings(self.dir_path)
         self.calSettings = None
-        result = self.calSettingsDialog.exec_()
+        result = self.calSettingsDialog.exec()
         if result == 1:
             self.calSettings = self.calSettingsDialog.getValues()
             # self.useCalibrationCenter.setEnabled(True)
@@ -792,7 +791,7 @@ class CalibrationDialog(QMainWindow):
             msg.setStandardButtons(QMessageBox.Ok)
             msg.setIcon(QMessageBox.Warning)
             msg.setFixedWidth(300)
-            msg.exec_()
+            msg.exec()
             self.imageCanvas.draw_idle()
             self.function = ["im_zoomin"]
         else:
@@ -819,7 +818,7 @@ class CalibrationDialog(QMainWindow):
                 msg.setWindowTitle("Double Zoom Guide")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
                 msg.setCheckBox(dontShowAgainDoubleZoomMessage)
-                msg.exec_()
+                msg.exec()
                 self.dontShowAgainDoubleZoomMessageResult = dontShowAgainDoubleZoomMessage.isChecked()
             self.doubleZoomMode = False
             return

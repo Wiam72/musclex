@@ -153,6 +153,7 @@ class ProjectionTracesGUI(QMainWindow):
     def __init__(self):
         QWidget.__init__(self)
         self.setWindowTitle("Muscle X Projection Traces v." + __version__)
+        self.setStyleSheet("QMainWindow {background-color: #ebebeb;}")
         self.current_file = 0
         self.dir_path = ""
         self.calSettings = None

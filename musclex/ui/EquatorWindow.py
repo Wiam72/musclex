@@ -190,6 +190,7 @@ class EquatorWindow(QMainWindow):
         self.centralWidget = QWidget(self)
         self.mainLayout = QVBoxLayout(self.centralWidget)
         self.setCentralWidget(self.centralWidget)
+        self.setStyleSheet("QMainWindow {background-color: #ebebeb;}")
 
         self.tabWidget = QTabWidget()
         self.tabWidget.setTabPosition(QTabWidget.North)

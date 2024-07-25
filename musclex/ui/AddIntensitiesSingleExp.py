@@ -115,12 +115,13 @@ class AddIntensitiesSingleExp(QMainWindow):
         """
         pfss = "QPushButton { color: #ededed; background-color: #af6207}"
         self.setWindowTitle("Muscle X Add Intensities Single Experiment v." + __version__)
+        self.setStyleSheet("QMainWindow {background-color: #ebebeb;}")
         self.centralWidget = QWidget(self)
         self.setCentralWidget(self.centralWidget)
         self.mainLayout = QHBoxLayout(self.centralWidget)
 
         self.tabWidget = QTabWidget()
-        self.tabWidget.setTabPosition(QTabWidget.North)
+        self.tabWidget.setTabPosition(QTabWidget.TabPosition.North)
         self.tabWidget.setDocumentMode(False)
         self.tabWidget.setTabsClosable(False)
         self.tabWidget.setStyleSheet("QTabBar::tab { height: 40px; width: 200px; }")
@@ -135,7 +136,7 @@ class AddIntensitiesSingleExp(QMainWindow):
         ## display browse folder buttons when program started
         self.verImgLayout = QVBoxLayout()
         self.verImgLayout.setContentsMargins(0, 0, 0, 0)
-        self.verImgLayout.setAlignment(Qt.AlignCenter)
+        self.verImgLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.browseFileButton = QPushButton("Select an H5 File...")
         self.verImgLayout.addWidget(self.browseFileButton)
@@ -159,12 +160,12 @@ class AddIntensitiesSingleExp(QMainWindow):
 
         # Main Layout to add GrpBoxes To
         self.optionsLayout = QVBoxLayout()
-        self.optionsLayout.setAlignment(Qt.AlignCenter)
+        self.optionsLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         # Display Options
         self.displayOptGrpBx = QGroupBox()
         self.displayOptGrpBx.setTitle("Display Options")
-        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.displayOptGrpBx.setStyleSheet("QGroupBox {font-weight: bold;}")
         self.dispOptLayout = QGridLayout()
 
@@ -410,7 +411,7 @@ class AddIntensitiesSingleExp(QMainWindow):
         # Display Options
         self.resultDispOptGrp = QGroupBox()
         self.resultDispOptGrp.setTitle("Display Options")
-        self.resultDispOptGrp.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.resultDispOptGrp.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.resultDispOptLayout = QGridLayout()
 
         self.spResultmaxInt = QDoubleSpinBox()
@@ -579,7 +580,7 @@ class AddIntensitiesSingleExp(QMainWindow):
             else:
                 file_name = self.dir_path + '/' + self.img_list[self.currentFileNumber]
             self.imageMaskingTool = ImageMaskerWindow(self.dir_path , file_name, self.spminInt.value(), self.spmaxInt.value())
-        if self.imageMaskingTool.exec_():
+        if self.imageMaskingTool.exec():
             if os.path.exists(join(join(self.dir_path, 'settings'), 'mask.tif')):
                 print("mask found!!")
                 self.maskPath = join(join(self.dir_path, 'settings'), 'mask.tif')
@@ -657,7 +658,7 @@ class AddIntensitiesSingleExp(QMainWindow):
                 file_path = self.dir_path
             self.imageSequenceDialog = AISEImageSelectionWindow(file_path, self.img_list, self.img_grps, self.misaligned_images, self.isHdf5)
         self.imageSequenceLists = None
-        if self.imageSequenceDialog.exec_():
+        if self.imageSequenceDialog.exec():
             self.customImageSequence = True
             if self.imageSequenceDialog.img_grps:
                 self.img_grps = self.imageSequenceDialog.img_grps
@@ -712,7 +713,7 @@ class AddIntensitiesSingleExp(QMainWindow):
     def checkImages(self):
         if self.unalignedImagesDialog is None:
             self.unalignedImagesDialog = UnalignedImagesDialog()
-        if self.unalignedImagesDialog.exec_():
+        if self.unalignedImagesDialog.exec():
             inconsistent_images = []
             imageCo = self.unalignedImagesDialog.image
             centerCo = self.unalignedImagesDialog.center
@@ -942,7 +943,7 @@ class AddIntensitiesSingleExp(QMainWindow):
         errMsg.setInformativeText(text)
         errMsg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         errMsg.setIcon(QMessageBox.Warning)
-        ret = errMsg.exec_()
+        ret = errMsg.exec()
 
         # If "yes" is pressed
         if ret == QMessageBox.Yes:
@@ -1241,7 +1242,7 @@ class AddIntensitiesSingleExp(QMainWindow):
                 msg.setWindowTitle("Double Zoom Guide")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
                 msg.setCheckBox(dontShowAgainDoubleZoomMessage)
-                msg.exec_()
+                msg.exec()
                 self.dontShowAgainDoubleZoomMessageResult = dontShowAgainDoubleZoomMessage.isChecked()
             self.doubleZoomMode = False
             return
@@ -2226,7 +2227,7 @@ class AddIntensitiesSingleExp(QMainWindow):
             self.calSettingsDialog = CalibrationSettings(self.dir_path)
         self.calSettings = None
         # cal_setting = self.calSettingsDialog.calSettings
-        result = self.calSettingsDialog.exec_()
+        result = self.calSettingsDialog.exec()
         if result == 1:
             self.calSettings = self.calSettingsDialog.getValues()
 
@@ -2308,7 +2309,7 @@ class AddIntensitiesSingleExp(QMainWindow):
                     infMsg.setInformativeText("File is not a valid HDF5 file or corrupted.")
                     infMsg.setStandardButtons(QMessageBox.Ok)
                     infMsg.setIcon(QMessageBox.Information)
-                    infMsg.exec_()
+                    infMsg.exec()
             else:
                 errMsg = QMessageBox()
                 errMsg.setText('Wrong file type')
@@ -2318,7 +2319,7 @@ class AddIntensitiesSingleExp(QMainWindow):
                 errMsg.setStandardButtons(QMessageBox.Ok)
                 errMsg.setIcon(QMessageBox.Warning)
                 errMsg.setFixedWidth(300)
-                errMsg.exec_()
+                errMsg.exec()
                 print(msg)
 
     def browseFolder(self):
@@ -2350,7 +2351,7 @@ class AddIntensitiesSingleExp(QMainWindow):
                 infMsg.setInformativeText("File is not a valid .TIFF file. The file will be skipped.")
                 infMsg.setStandardButtons(QMessageBox.Ok)
                 infMsg.setIcon(QMessageBox.Information)
-                infMsg.exec_()
+                infMsg.exec()
 
     def updateImageGroups(self):
         """
@@ -2634,7 +2635,7 @@ class AddIntensitiesSingleExp(QMainWindow):
                        "Send Feedback or Issues : <br>" +
                        "<a href='{0}'>{0}</a><br><br>".format("https://github.com/biocatiit/musclex/issues"))
         msgBox.setStandardButtons(QMessageBox.Ok)
-        msgBox.exec_()
+        msgBox.exec()
 
 def getRectanglePatch(center, w, h):
     """

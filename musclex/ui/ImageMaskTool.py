@@ -44,13 +44,13 @@ def displayImage(imageArray, minInt, maxInt):
         normFlippedImageArray = normFlippedImageArray.astype(np.uint8)  # Convert to 8-bit
 
     # Create a QImage from the 8-bit array
-    qImg = QImage(normFlippedImageArray.data, normFlippedImageArray.shape[1], normFlippedImageArray.shape[0], normFlippedImageArray.strides[0], QImage.Format_Grayscale8)
+    qImg = QImage(normFlippedImageArray.data, normFlippedImageArray.shape[1], normFlippedImageArray.shape[0], normFlippedImageArray.strides[0], QImage.Format.Format_Grayscale8)
 
     # Convert QImage to QPixmap
     pixmap = QPixmap.fromImage(qImg)
 
     # Scale the pixmap to fit within the 500x500 area while maintaining the aspect ratio
-    scaledPixmap = pixmap.scaled(500, 500, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+    scaledPixmap = pixmap.scaled(500, 500, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
 
     return scaledPixmap
 
@@ -59,6 +59,7 @@ def displayImage(imageArray, minInt, maxInt):
 class ImageMaskerWindow(QDialog):
     def __init__(self, dir_path, imagePath, minInt, maxInt):
         super().__init__()
+        self.setStyleSheet("QDialog {background-color: #ebebeb;}")
         self.dir_path = dir_path
         self.imagePath = imagePath
         self.minInt = minInt # Min Intensity from AISE User Input
@@ -89,7 +90,7 @@ class ImageMaskerWindow(QDialog):
         self.imageLabel.setFixedSize(500, 500)  # Set the fixed size
         # Optional: Set a border to visualize the area if you like
         self.imageLabel.setStyleSheet("border: 1px solid black;")
-        self.imageLabel.setAlignment(Qt.AlignCenter)  # Center-align the image
+        self.imageLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)  # Center-align the image
 
 
         self.selectBlankImg = QPushButton("Select Empty Cell Image(s)")
@@ -145,8 +146,8 @@ class ImageMaskerWindow(QDialog):
         # self.subtractSlider.valueChanged.connect(self.update_spinbox)
         self.subtractSliderText.valueChanged.connect(self.subtractBlankImage)
 
-        self.bottons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, Qt.Horizontal, self)
-        okButton = self.bottons.button(QDialogButtonBox.Ok)
+        self.bottons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel, Qt.Orientation.Horizontal, self)
+        okButton = self.bottons.button(QDialogButtonBox.StandardButton.Ok)
         if okButton:
             okButton.setText("Save")
             
@@ -394,10 +395,10 @@ class ImageMaskerWindow(QDialog):
         if self.maskData is None and self.subtractBlankChkbx.isChecked() == False and self.computedMaskData is None and self.drawnMaskData is None:
             errMsg = QMessageBox()
             errMsg.setText('No mask data or blank image was provided. Please draw a mask or select a blank image.')
-            errMsg.setStandardButtons(QMessageBox.Ok)
-            errMsg.setIcon(QMessageBox.Warning)
+            errMsg.setStandardButtons(QMessageBox.StandardButton.Ok)
+            errMsg.setIcon(QMessageBox.Icon.Warning)
             errMsg.setFixedWidth(300)
-            errMsg.exec_()
+            errMsg.exec()
         else:
             path = join(self.dir_path, 'settings')
             createFolder(path)

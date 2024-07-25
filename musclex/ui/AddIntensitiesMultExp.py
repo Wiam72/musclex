@@ -107,7 +107,7 @@ class AddIntensitiesMultExp(QMainWindow):
         self.mainLayout = QHBoxLayout(self.centralWidget)
 
         self.tabWidget = QTabWidget()
-        self.tabWidget.setTabPosition(QTabWidget.North)
+        self.tabWidget.setTabPosition(QTabWidget.TabPosition.North)
         self.tabWidget.setDocumentMode(False)
         self.tabWidget.setTabsClosable(False)
         self.tabWidget.setStyleSheet("QTabBar::tab { height: 40px; width: 200px; }")
@@ -122,7 +122,7 @@ class AddIntensitiesMultExp(QMainWindow):
         ## display browse folder buttons when program started
         self.verImgLayout = QVBoxLayout()
         self.verImgLayout.setContentsMargins(0, 0, 0, 0)
-        self.verImgLayout.setAlignment(Qt.AlignCenter)
+        self.verImgLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.browseFolderButton = QPushButton("Select a Folder...")
         self.verImgLayout.addWidget(self.browseFolderButton)
@@ -138,7 +138,7 @@ class AddIntensitiesMultExp(QMainWindow):
 
         self.displayOptGrpBx = QGroupBox()
         self.displayOptGrpBx.setTitle("Display Options")
-        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.dispOptLayout = QGridLayout()
 
         self.spminInt = QDoubleSpinBox()
@@ -174,7 +174,7 @@ class AddIntensitiesMultExp(QMainWindow):
         self.displayOptGrpBx.setLayout(self.dispOptLayout)
 
         self.optionsLayout = QVBoxLayout()
-        self.optionsLayout.setAlignment(Qt.AlignCenter)
+        self.optionsLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.settingsGroup = QGroupBox("Image Processing")
         self.settingsLayout = QGridLayout()
         self.settingsGroup.setLayout(self.settingsLayout)
@@ -286,7 +286,7 @@ class AddIntensitiesMultExp(QMainWindow):
         # Display Options
         self.resultDispOptGrp = QGroupBox()
         self.resultDispOptGrp.setTitle("Display Options")
-        self.resultDispOptGrp.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.resultDispOptGrp.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.resultDispOptLayout = QGridLayout()
 
         self.spResultmaxInt = QDoubleSpinBox()
@@ -597,9 +597,9 @@ class AddIntensitiesMultExp(QMainWindow):
             text += "\n - Center : " + str(self.orig_image_center)
         text += '\n\nAre you sure you want to process ' + str(len(self.numberToFilesMap)) + ' exposures in this Folder? \nThis might take a long time.'
         errMsg.setInformativeText(text)
-        errMsg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
-        errMsg.setIcon(QMessageBox.Warning)
-        ret = errMsg.exec_()
+        errMsg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Cancel)
+        errMsg.setIcon(QMessageBox.Icon.Warning)
+        ret = errMsg.exec()
 
         # If "yes" is pressed
         if ret == QMessageBox.Yes:
@@ -728,11 +728,11 @@ class AddIntensitiesMultExp(QMainWindow):
                 msg.setInformativeText(
                     "Please click on zoomed window on the top right")
                 dontShowAgainDoubleZoomMessage = QCheckBox("Do not show this message again")
-                msg.setStandardButtons(QMessageBox.Ok)
+                msg.setStandardButtons(QMessageBox.StandardButton.Ok)
                 msg.setWindowTitle("Double Zoom Guide")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
                 msg.setCheckBox(dontShowAgainDoubleZoomMessage)
-                msg.exec_()
+                msg.exec()
                 self.dontShowAgainDoubleZoomMessageResult = dontShowAgainDoubleZoomMessage.isChecked()
             self.doubleZoomMode = False
             return
@@ -1722,7 +1722,7 @@ class AddIntensitiesMultExp(QMainWindow):
         self.calSettings = None
         cal_setting = self.calSettingsDialog.calSettings
         if cal_setting is not None or force:
-            result = self.calSettingsDialog.exec_()
+            result = self.calSettingsDialog.exec()
             if result == 1:
                 self.calSettings = self.calSettingsDialog.getValues()
 
@@ -1814,7 +1814,7 @@ class AddIntensitiesMultExp(QMainWindow):
             # msg.setStandardButtons(QMessageBox.Ok)
             # msg.setWindowTitle("Finished Adding Intensities")
             # msg.setStyleSheet("QLabel{min-width: 500px;}")
-            # msg.exec_()
+            # msg.exec()
 
     def onImageChanged(self):
         """
@@ -2094,7 +2094,7 @@ class AddIntensitiesMultExp(QMainWindow):
         """
         msgBox = QMessageBox()
         msgBox.setWindowTitle("About")
-        msgBox.setTextFormat(Qt.RichText)
+        msgBox.setTextFormat(Qt.TextFormat.RichText)
         msgBox.setText("<br><br><br>" +
                        "Add Itensities Multiple Experiments (former Add Intensities) is running under" +
                        "<h2>Muscle X v" +
@@ -2108,8 +2108,8 @@ class AddIntensitiesMultExp(QMainWindow):
                        "<a href='{0}'>{0}</a><br><br>".format("https://github.com/biocatiit/musclex") +
                        "Send Feedback or Issues : <br>" +
                        "<a href='{0}'>{0}</a><br><br>".format("https://github.com/biocatiit/musclex/issues"))
-        msgBox.setStandardButtons(QMessageBox.Ok)
-        msgBox.exec_()
+        msgBox.setStandardButtons(QMessageBox.StandardButton.Ok)
+        msgBox.exec()
     
     def doubleZoomToOrigCoord(self, x, y):
         """

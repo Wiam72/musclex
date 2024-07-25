@@ -88,6 +88,7 @@ class XRayViewerGUI(QMainWindow):
         Open a file finder and return the name of the file selected
         """
         self.setWindowTitle("X-Ray Viewer v." + __version__)
+        self.setStyleSheet("QMainWindow {background-color: #ebebeb;}")
 
         self.centralWidget = QWidget(self)
         self.setCentralWidget(self.centralWidget)

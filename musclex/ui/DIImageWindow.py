@@ -267,7 +267,7 @@ class DIImageWindow(QMainWindow):
         self.imageTab.setContentsMargins(0, 0, 0, 0)
         self.imageTabLayout = QHBoxLayout(self.imageTab)
         self.displayedImgLayout = QHBoxLayout()
-        self.displayedImgLayout.setAlignment(Qt.AlignCenter)
+        self.displayedImgLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.displayImgFigure = plt.figure()
         self.displayImgAxes = self.displayImgFigure.add_subplot(111)
         self.displayImgCanvas = FigureCanvas(self.displayImgFigure)
@@ -280,7 +280,7 @@ class DIImageWindow(QMainWindow):
         self.displayRingsChkbx.setChecked(True)
         self.intensityGrp = QGroupBox()
         self.intensityGrp.setTitle("Image Intensity")
-        self.intensityGrp.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
+        self.intensityGrp.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
         self.intensityLayout = QGridLayout()
         self.intensityGrp.setLayout(self.intensityLayout)
         self.maxInt = QDoubleSpinBox()
@@ -414,11 +414,11 @@ class DIImageWindow(QMainWindow):
         self.m1_keys_layout.addWidget(self.partialRange, 1, 1, 1, 1)
         change_label = QLabel("Change Range")
         self.m1_keys_layout.addWidget(change_label, 0, 2, 1, 2)
-        self.m1_keys_layout.setAlignment(change_label, Qt.AlignCenter)
+        self.m1_keys_layout.setAlignment(change_label, Qt.AlignmentFlag.AlignCenter)
         self.m1_keys_layout.addWidget(self.prev_range, 1, 2, 1, 1)
         self.m1_keys_layout.addWidget(self.next_range, 1, 3, 1, 1)
         self.m1_keys_layout.setAlignment(Qt.AlignTop)
-        self.m1_key_group.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
+        self.m1_key_group.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
         self.m1_key_group.setAlignment(Qt.AlignTop)
 
         self.m1_partial_hist_figure = plt.figure()
@@ -527,7 +527,7 @@ class DIImageWindow(QMainWindow):
         ## tabs
         self.tabWidget = QTabWidget()
         self.tabWidget.setStyleSheet("QTabBar::tab { height: 40px; width: 300px; }")
-        self.tabWidget.setTabPosition(QTabWidget.North)
+        self.tabWidget.setTabPosition(QTabWidget.TabPosition.North)
         self.tabWidget.setDocumentMode(False)
         self.tabWidget.setTabsClosable(False)
         self.tabWidget.setStyleSheet("QTabBar::tab { height: 40px; width: 300px; }")
@@ -623,7 +623,7 @@ class DIImageWindow(QMainWindow):
         """
         dialog = BlankImageSettings(self.filePath)
         self.mask = None
-        result = dialog.exec_()
+        result = dialog.exec()
         if result == 1 and self.cirProj is not None:
             self.cirProj.removeInfo('2dintegration')
             self.processImage()
@@ -951,7 +951,7 @@ class DIImageWindow(QMainWindow):
         self.calSettings = None
         cal_setting = settingDialog.calSettings
         if cal_setting is not None or force:
-            result = settingDialog.exec_()
+            result = settingDialog.exec()
             if result == 1:
                 self.calSettings = settingDialog.getValues()
                 return True
@@ -999,12 +999,12 @@ class DIImageWindow(QMainWindow):
                     text += "\n  - Pixel Size : " + str(self.calSettings["pixel_size"]) + " nm"
         text += '\n\nAre you sure you want to process ' + str(nImg) + ' image(s) in this Folder? \nThis might take a long time.'
         errMsg.setInformativeText(text)
-        errMsg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
-        errMsg.setIcon(QMessageBox.Warning)
-        ret = errMsg.exec_()
+        errMsg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Cancel)
+        errMsg.setIcon(QMessageBox.Icon.Warning)
+        ret = errMsg.exec()
 
         # If "yes" is pressed
-        if ret == QMessageBox.Yes:
+        if ret == QMessageBox.StandardButton.Yes:
             # Display progress bar
             self.progressBar.setMaximum(nImg)
             self.progressBar.setMinimum(0)
@@ -1173,7 +1173,7 @@ class DIImageWindow(QMainWindow):
         Process the scanning diffraction
         """
         if self.cirProj is not None:
-            QApplication.setOverrideCursor(Qt.WaitCursor)
+            QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
             self.flags = self.getFlags(imgChanged)
             self.cirProj.process(self.flags)
             QApplication.restoreOverrideCursor()
@@ -1601,7 +1601,7 @@ class DIImageWindow(QMainWindow):
             # img[mask > 0] += 25
             img = getBGR(img)
             r, g, b = cv2.split(img)
-            red_panel = r.astype(np.int)
+            red_panel = r.astype(int)
             red_panel[mask > 0] += 50
             red_panel[red_panel>255] = 255
             r = red_panel.astype(r.dtype)

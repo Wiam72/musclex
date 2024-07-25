@@ -117,7 +117,7 @@ class HDFBrowser(QDialog):
         self.createLayout.addWidget(self.y_end, 2, 2, 1, 1)
         self.createLayout.addWidget(self.y_step, 2, 3, 1, 1)
 
-        self.bottons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, Qt.Horizontal, self)
+        self.bottons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel, Qt.Orientation.Horizontal, self)
 
         self.mainLayout.addWidget(self.label, 0, 0, 1, 2)
         self.mainLayout.addWidget(self.browseButton, 1, 0, 1, 1)
@@ -177,9 +177,9 @@ class HDFBrowser(QDialog):
             errMsg = QMessageBox()
             errMsg.setText('HDF File is not set')
             errMsg.setInformativeText('Please select a HDF or Log file or create a new one')
-            errMsg.setStandardButtons(QMessageBox.Ok)
-            errMsg.setIcon(QMessageBox.Warning)
-            errMsg.exec_()
+            errMsg.setStandardButtons(QMessageBox.StandardButton.Ok)
+            errMsg.setIcon(QMessageBox.Icon.Warning)
+            errMsg.exec()
         elif self.status == 1:
             self.accept()
         elif self.status == 2:
@@ -280,6 +280,7 @@ class DIBatchWindow(QMainWindow):
         Initialize the UI
         """
         self.setWindowTitle("Muscle X Scanning Diffraction v." + __version__)
+        self.setStyleSheet("QMainWindow {background-color: #ebebeb;}")
         self.centralWidget = QWidget(self)
         self.mainLayout = QGridLayout(self.centralWidget)
         self.setCentralWidget(self.centralWidget)
@@ -327,13 +328,13 @@ class DIBatchWindow(QMainWindow):
         self.bandwidthSpnBx.setValue(1)
         self.bandwidthSpnBx.setDecimals(8)
         self.unitChoice = QComboBox()
-        self.unitChoice.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.unitChoice.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.unitChoice.addItem("nm")
         self.unitChoice.addItem("pixel")
         self.distanceSpnBx.setEnabled(False)
         self.unitChoice.setEnabled(False)
         self.refreshButton = QPushButton("Reload")
-        self.refreshButton.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.refreshButton.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.ringSettingsLayout.addWidget(self.bestRadio, 0, 0, 1, 4)
         self.ringSettingsLayout.addWidget(self.distanceRadio, 1, 0, 1, 1)
         self.ringSettingsLayout.addWidget(self.aSigmaLabel, 0, 1, 1, 1)
@@ -346,9 +347,9 @@ class DIBatchWindow(QMainWindow):
         self.ringSettingsLayout.addWidget(self.refreshButton, 0, 4, 3, 1)
 
         self.flipX = QPushButton("Flip X")
-        self.flipX.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
+        self.flipX.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
         self.flipY = QPushButton("Flip Y")
-        self.flipY.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
+        self.flipY.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
 
         self.repChoice = QComboBox()
         self.repChoice.addItem("Total Intensity (Convex Hull) Map")
@@ -379,9 +380,9 @@ class DIBatchWindow(QMainWindow):
         self.beamYSpinBox = QDoubleSpinBox()
         self.spacingFrame = QFrame()
         self.spacingLayout = QGridLayout(self.spacingFrame)
-        self.spacingLayout.addWidget(QLabel("Beam size X : "), 0, 0, 1, 1, Qt.AlignCenter)
+        self.spacingLayout.addWidget(QLabel("Beam size X : "), 0, 0, 1, 1, Qt.AlignmentFlag.AlignCenter)
         self.spacingLayout.addWidget(self.beamXSpinBox, 0, 1, 1, 1)
-        self.spacingLayout.addWidget(QLabel("Beam size Y : "), 0, 2, 1, 1, Qt.AlignCenter)
+        self.spacingLayout.addWidget(QLabel("Beam size Y : "), 0, 2, 1, 1, Qt.AlignmentFlag.AlignCenter)
         self.spacingLayout.addWidget(self.beamYSpinBox, 0, 3, 1, 1)
 
         self.minMap = QDoubleSpinBox()
@@ -406,15 +407,15 @@ class DIBatchWindow(QMainWindow):
         self.scaleY.setKeyboardTracking(False)
         self.scaleY.setValue(2)
         self.intensityLayout = QGridLayout()
-        self.intensityLayout.addWidget(QLabel("Min Intensity: "), 0, 0, 1, 1, Qt.AlignCenter)
+        self.intensityLayout.addWidget(QLabel("Min Intensity: "), 0, 0, 1, 1, Qt.AlignmentFlag.AlignCenter)
         self.intensityLayout.addWidget(self.minMap, 0, 1, 1, 1)
         self.intensityLayout.addWidget(self.minMapVal, 0, 2, 1, 1)
-        self.intensityLayout.addWidget(QLabel("Max Intensity: "), 0, 3, 1, 1, Qt.AlignCenter)
+        self.intensityLayout.addWidget(QLabel("Max Intensity: "), 0, 3, 1, 1, Qt.AlignmentFlag.AlignCenter)
         self.intensityLayout.addWidget(self.maxMap, 0, 4, 1, 1)
         self.intensityLayout.addWidget(self.maxMapVal, 0, 5, 1, 1)
-        self.intensityLayout.addWidget(QLabel("Orientation Scale X: "), 0,6, 1, 1, Qt.AlignCenter)
+        self.intensityLayout.addWidget(QLabel("Orientation Scale X: "), 0,6, 1, 1, Qt.AlignmentFlag.AlignCenter)
         self.intensityLayout.addWidget(self.scaleX, 0, 7, 1, 1)
-        self.intensityLayout.addWidget(QLabel("Orientation Scale Y: "), 1,6, 1, 1, Qt.AlignCenter)
+        self.intensityLayout.addWidget(QLabel("Orientation Scale Y: "), 1,6, 1, 1, Qt.AlignmentFlag.AlignCenter)
         self.intensityLayout.addWidget(self.scaleY, 1, 7, 1, 1)
 
         self.mapFigure = plt.figure()
@@ -428,8 +429,8 @@ class DIBatchWindow(QMainWindow):
         self.mapFrame = QFrame()
         self.mapLayout = QGridLayout(self.mapFrame)
         self.mapLayout.addWidget(self.ringSettingsGrp, 0, 0, 2, 3)
-        self.mapLayout.addWidget(self.flipX, 0, 3, 1, 1, Qt.AlignJustify)
-        self.mapLayout.addWidget(self.flipY, 1, 3, 1, 1, Qt.AlignJustify)
+        self.mapLayout.addWidget(self.flipX, 0, 3, 1, 1, Qt.AlignmentFlag.AlignJustify)
+        self.mapLayout.addWidget(self.flipY, 1, 3, 1, 1, Qt.AlignmentFlag.AlignJustify)
         self.mapLayout.addWidget(QLabel("Representation : "), 2, 0, 1, 1)
         self.mapLayout.addWidget(self.repChoice, 2, 1, 1, 2)
         self.mapLayout.addWidget(self.logScale, 2, 3, 1, 1)
@@ -465,7 +466,7 @@ class DIBatchWindow(QMainWindow):
         self.rightBarLayout = QVBoxLayout()
         self.rightBarLayout.addWidget(self.statusLabel)
         self.rightBarLayout.addWidget(self.moreDetailsButton)
-        self.rightBarLayout.setAlignment(Qt.AlignRight)
+        self.rightBarLayout.setAlignment(Qt.AlignmentFlag.AlignRight)
         self.rightBarFrame = QFrame()
         self.rightBarFrame.setLayout(self.rightBarLayout)
         self.statusBar.addPermanentWidget(self.rightBarFrame)
@@ -659,16 +660,16 @@ class DIBatchWindow(QMainWindow):
                 errMsg = QMessageBox()
                 errMsg.setText('Image has not been selected')
                 errMsg.setInformativeText('Please select an image from maps')
-                errMsg.setStandardButtons(QMessageBox.Ok)
-                errMsg.setIcon(QMessageBox.Warning)
-                errMsg.exec_()
+                errMsg.setStandardButtons(QMessageBox.StandardButton.Ok)
+                errMsg.setIcon(QMessageBox.Icon.Warning)
+                errMsg.exec()
             else:
                 errMsg = QMessageBox()
                 errMsg.setText('Image not found')
                 errMsg.setInformativeText(str(self.batchmodeImgFilename) + ' not found.\nPlease select another image')
-                errMsg.setStandardButtons(QMessageBox.Ok)
-                errMsg.setIcon(QMessageBox.Warning)
-                errMsg.exec_()
+                errMsg.setStandardButtons(QMessageBox.StandardButton.Ok)
+                errMsg.setIcon(QMessageBox.Icon.Warning)
+                errMsg.exec()
 
     def maxIntChanged(self):
         """
@@ -734,7 +735,7 @@ class DIBatchWindow(QMainWindow):
         """
         Update the UI
         """
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         self.colormap = str(self.colorChoice.currentText())
         self.usingLogScale = self.logScale.isChecked()
         self.rotating90 = self.rotRAngle.isChecked()
@@ -1197,7 +1198,7 @@ class DIBatchWindow(QMainWindow):
                 else:
                     dlg = HDFBrowser('There are more than one HDF file detected. \nPlease select an HDF file to process or create a new one.', path)
 
-                ret = dlg.exec_()
+                ret = dlg.exec()
                 if ret == 0:
                     hdf_filename = ""
                 else:
@@ -1235,7 +1236,7 @@ class DIBatchWindow(QMainWindow):
         """
         Process the batch results
         """
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         dir_path = self.filePath
         self.csvManager.load_all()
         hdf_filename = self.hdf_filename
@@ -1489,9 +1490,9 @@ class DIBatchWindow(QMainWindow):
                 errMsg = QMessageBox()
                 errMsg.setText('No image and summary.csv detected')
                 errMsg.setInformativeText('Please select an image or another folder to process.')
-                errMsg.setStandardButtons(QMessageBox.Ok)
-                errMsg.setIcon(QMessageBox.Warning)
-                errMsg.exec_()
+                errMsg.setStandardButtons(QMessageBox.StandardButton.Ok)
+                errMsg.setIcon(QMessageBox.Icon.Warning)
+                errMsg.exec()
         else:
             df_sum = self.csvManager.df_sum
             # df_rings = self.csvManager.df_rings

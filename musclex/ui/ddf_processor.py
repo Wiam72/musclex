@@ -58,13 +58,13 @@ class DDFWindow(QMainWindow):
         self.browseFileButton = QPushButton("Browse")
 
         separator = QFrame()
-        separator.setFrameShape(QFrame.HLine)
-        separator.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
+        separator.setFrameShape(QFrame.Shape.HLine)
+        separator.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         separator.setLineWidth(1)
 
         separator2 = QFrame()
-        separator2.setFrameShape(QFrame.HLine)
-        separator2.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
+        separator2.setFrameShape(QFrame.Shape.HLine)
+        separator2.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         separator2.setLineWidth(1)
 
         self.columnGrid = QGridLayout()
@@ -81,10 +81,10 @@ class DDFWindow(QMainWindow):
         self.mainGrid.addWidget(self.inputField, 0, 1, 1, 1)
         self.mainGrid.addWidget(self.browseFileButton, 0, 2, 1, 1)
         self.mainGrid.addWidget(separator, 1, 0, 1, 3)
-        self.mainGrid.addWidget(QLabel("2. Column Selection"), 2, 0, 1, 3, alignment = Qt.AlignCenter)
+        self.mainGrid.addWidget(QLabel("2. Column Selection"), 2, 0, 1, 3, alignment = Qt.AlignmentFlag.AlignCenter)
         self.mainGrid.addLayout(self.columnGrid, 3, 0, 1, 3)
         self.mainGrid.addWidget(separator2, 4, 0, 1, 3)
-        self.mainGrid.addLayout(self.freqLayout, 5, 0, 1, 3, alignment = Qt.AlignCenter)
+        self.mainGrid.addLayout(self.freqLayout, 5, 0, 1, 3, alignment = Qt.AlignmentFlag.AlignCenter)
         # self.mainGrid.addWidget(QLabel("Average every : "), 3, 1, 1, 1, alignment = Qt.AlignRight)
         # self.mainGrid.addWidget(self.freqSpnBx, 3, 2, 1, 1)
         self.columnGrid.rowMinimumHeight(50)
@@ -106,7 +106,7 @@ class DDFWindow(QMainWindow):
         self.mainLayout.addStretch()
         self.mainLayout.addWidget(self.generateButton)
         self.mainLayout.addWidget(self.statusBar)
-        self.mainLayout.setAlignment(self.generateButton, Qt.AlignCenter)
+        self.mainLayout.setAlignment(self.generateButton, Qt.AlignmentFlag.AlignCenter)
 
         self.show()
         self.resize(700, 50)
@@ -134,9 +134,9 @@ class DDFWindow(QMainWindow):
                 errMsg = QMessageBox()
                 errMsg.setText('Invalid Input')
                 errMsg.setInformativeText("Please select a .txt or .ddf file\n\n")
-                errMsg.setStandardButtons(QMessageBox.Ok)
-                errMsg.setIcon(QMessageBox.Warning)
-                errMsg.exec_()
+                errMsg.setStandardButtons(QMessageBox.StandardButton.Ok)
+                errMsg.setIcon(QMessageBox.Icon.Warning)
+                errMsg.exec()
                 self.browseFile()
 
     def processFile(self):
@@ -147,7 +147,7 @@ class DDFWindow(QMainWindow):
         cols = None
         reading = "Please wait. Input file is being read ."
         self.generateButton.setEnabled(False)
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         for i, row in enumerate(open(self.current_file)):
             if (i/100)%3 == 0:
                 self.statusText.setText(reading)
@@ -199,7 +199,7 @@ class DDFWindow(QMainWindow):
                 col_cb = QCheckBox(col_name)
                 self.colChkBxs.append(col_cb)
                 self.columnGrid.addWidget(col_cb, r, c , 1, 1)
-                self.columnGrid.setAlignment(col_cb, Qt.AlignCenter)
+                self.columnGrid.setAlignment(col_cb, Qt.AlignmentFlag.AlignCenter)
         self.resize(700, 50)
 
     def generateFile(self):
@@ -216,9 +216,9 @@ class DDFWindow(QMainWindow):
             errMsg = QMessageBox()
             errMsg.setText('No column selected')
             errMsg.setInformativeText("Please select at least 1 column.\n\n")
-            errMsg.setStandardButtons(QMessageBox.Ok)
-            errMsg.setIcon(QMessageBox.Warning)
-            errMsg.exec_()
+            errMsg.setStandardButtons(QMessageBox.StandardButton.Ok)
+            errMsg.setIcon(QMessageBox.Icon.Warning)
+            errMsg.exec()
             return
         genData = self.data.groupby(self.data.index / self.freqSpnBx.value()).mean()
         genData = genData[selected_cols]

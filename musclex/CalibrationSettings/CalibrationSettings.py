@@ -74,7 +74,8 @@ class CalibrationSettings(QDialog):
             self.calSettings["center"]=center
 
         # self.setStyleSheet(getStyleSheet())
-        self.setStyleSheet("QDialog {border: 1px solid black;}")
+        # self.setStyleSheet("QDialog {border: 1px solid black;}")
+        self.setStyleSheet("QDialog {background-color: #ebebeb;}")
         self.initUI()
         self.setConnection()
         self.setAllToolTips()

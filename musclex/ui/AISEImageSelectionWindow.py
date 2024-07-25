@@ -45,8 +45,8 @@ class AISEImageSelectionWindow(QDialog):
         
         self.createListWidget()
 
-        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll.setWidgetResizable(True)
         #self.scroll.setVisible(False)
 
@@ -60,7 +60,7 @@ class AISEImageSelectionWindow(QDialog):
 
         self.displayOptGrpBx = QGroupBox()
         self.displayOptGrpBx.setTitle("Display Options")
-        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.dispOptLayout = QGridLayout()
 
         self.spminInt = QDoubleSpinBox()
@@ -90,7 +90,7 @@ class AISEImageSelectionWindow(QDialog):
 
         self.legendGrpBox = QGroupBox()
         self.legendGrpBox.setTitle("Legend")
-        self.legendGrpBox.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.legendGrpBox.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.legendGrpBoxLayout = QVBoxLayout()
 
         # Select sequence button
@@ -195,14 +195,14 @@ class AISEImageSelectionWindow(QDialog):
 
     def open_message_box(self):
         msg_box = QMessageBox()
-        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setIcon(QMessageBox.Icon.Information)
         msg_box.setText("Select the FIRST and LAST image of a sequence.")
         msg_box.setWindowTitle("Warning")
-        msg_box.setStandardButtons(QMessageBox.Ok)
+        msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
         cb = QCheckBox('Do not show this message again')
         cb.stateChanged.connect(self.showAgain)
         msg_box.setCheckBox(cb)
-        retval = msg_box.exec_()
+        retval = msg_box.exec()
 
     def delete_images_from_grp(self):
         for img in self.img_to_delete:
@@ -295,7 +295,7 @@ class AISEImageSelectionWindow(QDialog):
 
                     vbox = QVBoxLayout()
                     image = self.normalizeImage(image, None, None)
-                    q_image = QImage(image.data, image.shape[1], image.shape[0], QImage.Format_Indexed8)
+                    q_image = QImage(image.data, image.shape[1], image.shape[0], QImage.Format.Format_Indexed8)
                     pixmap = QPixmap.fromImage(q_image)            
                     label.setPixmap(pixmap.scaled(100, 100, Qt.KeepAspectRatio))
                     self.thumbnail_labels.append(label)  # Add label to the list
@@ -318,8 +318,8 @@ class AISEImageSelectionWindow(QDialog):
                     #TODO figure out why the text is still being truncated
                     file_label.setFixedHeight(20)
                     checkbox.setFixedHeight(20)
-                    file_label.setAlignment(Qt.AlignLeft)
-                    file_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+                    file_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+                    file_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
                     
                     hbox.addWidget(file_label)
                     hbox.addWidget(checkbox)
@@ -336,7 +336,7 @@ class AISEImageSelectionWindow(QDialog):
     # Loads a new image if XRayViewerGUI is already open
 
     def onLabelClicked(self, event, index, label):
-        if event.button() == Qt.LeftButton:
+        if event.button() == Qt.MouseButton.LeftButton:
             print(self.img_list[index])
             print(label.property("fileName"))
             print("opening xv")
@@ -382,8 +382,8 @@ class AISEImageSelectionWindow(QDialog):
             vmax = self.spmaxInt.value()
             image = self.normalizeImage(image, vmax, vmin)
             # Convert to qImage
-            q_image = QImage(image.data, image.shape[1], image.shape[0], QImage.Format_Indexed8)
+            q_image = QImage(image.data, image.shape[1], image.shape[0], QImage.Format.Format_Indexed8)
             pixmap = QPixmap.fromImage(q_image)
-            label.setPixmap(pixmap.scaled(100, 100, Qt.KeepAspectRatio))
+            label.setPixmap(pixmap.scaled(100, 100, Qt.AspectRatioMode.KeepAspectRatio))
 
     #def setConnections(self):
