@@ -53,8 +53,8 @@ class LauncherForm(QWidget):
     programs = ['xv', 'eq', 'qf', 'pt', 'di', 'ddf', 'aise', 'aime'] # 'dc',
 
     def __init__(self):
+        print("is this called?")
         super(QWidget, self).__init__()
-
         # Set up the user interface from Designer.
         self.ui = Ui_LauncherForm()
         self.ui.setupUi(self)
@@ -64,7 +64,7 @@ class LauncherForm(QWidget):
         # Set up popup message box
         popupMsg = QMessageBox()
         popupMsg.setWindowTitle('Note')
-        popupMsg.setTextFormat(Qt.RichText)
+        popupMsg.setTextFormat(Qt.TextFormat.RichText)
         popupMsg.setText(
 """Please help us impove our program by reporting exceptions or bugs to
 <a href="https://www.github.com/biocatiit/musclex/issues">
@@ -72,7 +72,7 @@ https://www.github.com/biocatiit/musclex/issues</a>.""")
         popupMsg.setInformativeText(
 """When reporting, besides complete error logs, we hope you can also provide"""
 """the information of your platfrom and images you're processing. """)
-        popupMsg.setIcon(QMessageBox.Information)
+        popupMsg.setIcon(QMessageBox.Icon.Information)
         popupMsg.setCheckBox(QCheckBox("Do not show this again.", self))
         pmlayout = popupMsg.layout()
         pmlayout.addItem(QSpacerItem(756, 0), pmlayout.rowCount(), 0, 1, pmlayout.columnCount())
@@ -150,7 +150,7 @@ https://www.github.com/biocatiit/musclex/issues</a>.""")
         Close event
         """
         if not self.popupMsg.checkBox().isChecked():
-            self.popupMsg.exec_()
+            self.popupMsg.exec()
             if self.popupMsg.checkBox().isChecked():
                 if 'Launcher' not in self.config:
                     self.config['Launcher'] = {}
@@ -165,7 +165,11 @@ https://www.github.com/biocatiit/musclex/issues</a>.""")
         """
         Main function for the launcher
         """
-        app = QApplication(sys.argv)
+        app = QApplication.instance()
+        if app is None:
+            app = QApplication(sys.argv)
+        else:
+            print("using existing app")
         window = LauncherForm()
         window.show()
         sys.exit(app.exec())
@@ -235,7 +239,7 @@ class TestDialog(QDialog):
         self.testDialogLayout.addWidget(self.detail)
         QApplication.processEvents()
         self.detail.setFontWeight(50)
-        self.detail.moveCursor(QTextCursor.Start)
+        self.detail.moveCursor(QTextCursor.MoveOperation.Start)
         QApplication.processEvents()
 
     def runSummaryTestsButtonClicked(self):
@@ -256,7 +260,7 @@ class TestDialog(QDialog):
         Run Environment Tests.
         """
         self.progressBar.reset()
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         self.detail.setFontWeight(100)
         self.detail.insertPlainText("\nRunning environment tests of MuscleX modules.\nThis will take a few seconds...")
         QApplication.processEvents()
@@ -271,13 +275,13 @@ class TestDialog(QDialog):
         QApplication.processEvents()
         while proc.is_alive():
             time.sleep(0.5)
-            self.detail.moveCursor(QTextCursor.End)
+            self.detail.moveCursor(QTextCursor.MoveOperation.End)
             self.detail.insertPlainText(".")
             QApplication.processEvents()
         self.progressBar.setValue(100)
         QApplication.processEvents()
 
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         self.detail.setFontWeight(100)
         self.detail.insertPlainText("\nEnvironment tests complete.")
         QApplication.processEvents()
@@ -303,7 +307,7 @@ class TestDialog(QDialog):
         Run GPU Tests from unittest.
         """
         self.progressBar.reset()
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         QApplication.processEvents()
 
         suite = unittest.TestSuite()
@@ -314,7 +318,7 @@ class TestDialog(QDialog):
 
         self.detail.setFontWeight(100)
         self.detail.insertPlainText("GPU tests complete.\n")
-        self.detail.moveCursor(QTextCursor.NoMove)
+        self.detail.moveCursor(QTextCursor.MoveOperation.NoMove)
         QApplication.processEvents()
 
         test_results = self.get_latest_test()
@@ -350,12 +354,12 @@ class TestDialog(QDialog):
         """
         Triggered when the Show lastest test button is clicked
         """
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         QApplication.processEvents()
 
         self.detail.setFontWeight(100)
         self.detail.insertPlainText("\nLatest test results:\n")
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         QApplication.processEvents()
 
         self.detail.setFontWeight(50)
@@ -366,12 +370,12 @@ class TestDialog(QDialog):
         """
         Triggered when the Show release button is clicked
         """
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         QApplication.processEvents()
 
         self.detail.setFontWeight(100)
         self.detail.insertPlainText("\nLatest release results:\n")
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         QApplication.processEvents()
 
         self.detail.setFontWeight(50)
@@ -383,7 +387,7 @@ class TestDialog(QDialog):
         Run the downloading for pickle files.
         """
         self.progressBar.reset()
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         self.detail.setFontWeight(100)
         self.detail.insertPlainText("\nDownloading and unzipping pickle files for testing.\nThis could take a few minutes...")
         QApplication.processEvents()
@@ -393,7 +397,7 @@ class TestDialog(QDialog):
         self.progressBar.setValue(100)
         QApplication.processEvents()
 
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         self.detail.insertPlainText("\nDone.\n")
         QApplication.processEvents()
 
@@ -427,7 +431,7 @@ class TestDialog(QDialog):
         else:
             prev_data = ""
 
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         self.detail.setFontWeight(100)
         self.detail.insertPlainText("\nRunning summary tests of MuscleX modules.\nThis could take a few minutes...")
         QApplication.processEvents()
@@ -436,7 +440,7 @@ class TestDialog(QDialog):
         test_number = 0
         while progress < 100 and proc.is_alive():
             time.sleep(0.5)
-            self.detail.moveCursor(QTextCursor.End)
+            self.detail.moveCursor(QTextCursor.MoveOperation.End)
             self.detail.insertPlainText(".")
             QApplication.processEvents()
             if os.path.exists(self.test_path):
@@ -448,7 +452,7 @@ class TestDialog(QDialog):
                     self.progressBar.setValue(int(progress))
                     QApplication.processEvents()
 
-                    self.detail.moveCursor(QTextCursor.End)
+                    self.detail.moveCursor(QTextCursor.MoveOperation.End)
                     self.detail.insertPlainText(f"\nFinished test {test_number} out of {NTESTS}.\n")
                     QApplication.processEvents()
                 prev_data = curr_data
@@ -457,7 +461,7 @@ class TestDialog(QDialog):
         self.progressBar.setValue(100)
         QApplication.processEvents()
 
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         self.detail.setFontWeight(100)
         self.detail.insertPlainText("\nModule tests complete.")
         QApplication.processEvents()
@@ -507,7 +511,7 @@ class TestDialog(QDialog):
         else:
             prev_data = ""
 
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         self.detail.setFontWeight(100)
         self.detail.insertPlainText("\nRunning detailed tests of MuscleX modules.\nThis could take a few minutes...")
         QApplication.processEvents()
@@ -516,7 +520,7 @@ class TestDialog(QDialog):
         test_number = 0
         while progress < 100 and proc.is_alive():
             time.sleep(0.5)
-            self.detail.moveCursor(QTextCursor.End)
+            self.detail.moveCursor(QTextCursor.MoveOperation.End)
             self.detail.insertPlainText(".")
             QApplication.processEvents()
             if os.path.exists(self.test_path):
@@ -528,7 +532,7 @@ class TestDialog(QDialog):
                     self.progressBar.setValue(int(progress))
                     QApplication.processEvents()
 
-                    self.detail.moveCursor(QTextCursor.End)
+                    self.detail.moveCursor(QTextCursor.MoveOperation.End)
                     self.detail.insertPlainText(f"\nFinished test {test_number} out of {NTESTS}.\n")
                     QApplication.processEvents()
                 prev_data = curr_data
@@ -537,7 +541,7 @@ class TestDialog(QDialog):
         self.progressBar.setValue(100)
         QApplication.processEvents()
 
-        self.detail.moveCursor(QTextCursor.End)
+        self.detail.moveCursor(QTextCursor.MoveOperation.End)
         self.detail.setFontWeight(100)
         self.detail.insertPlainText("\nModule tests complete.")
         QApplication.processEvents()

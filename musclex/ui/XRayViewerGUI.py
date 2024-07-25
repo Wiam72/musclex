@@ -94,7 +94,7 @@ class XRayViewerGUI(QMainWindow):
         self.mainHLayout = QHBoxLayout(self.centralWidget)
 
         self.tabWidget = QTabWidget()
-        self.tabWidget.setTabPosition(QTabWidget.North)
+        self.tabWidget.setTabPosition(QTabWidget.TabPosition.North)
         self.tabWidget.setDocumentMode(False)
         self.tabWidget.setTabsClosable(False)
         self.tabWidget.setStyleSheet("QTabBar::tab { height: 40px; width: 200px; }")
@@ -108,7 +108,7 @@ class XRayViewerGUI(QMainWindow):
 
         self.verImgLayout = QVBoxLayout()
         self.verImgLayout.setContentsMargins(0, 0, 0, 0)
-        self.verImgLayout.setAlignment(Qt.AlignCenter)
+        self.verImgLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.selectImageButton = QPushButton('Click Here to Select an Image...')
         self.selectImageButton.setFixedHeight(100)
         self.selectImageButton.setFixedWidth(300)
@@ -124,7 +124,7 @@ class XRayViewerGUI(QMainWindow):
 
         self.displayOptGrpBx = QGroupBox()
         self.displayOptGrpBx.setTitle("Display Options")
-        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.dispOptLayout = QGridLayout()
 
         self.spminInt = QDoubleSpinBox()
@@ -171,7 +171,7 @@ class XRayViewerGUI(QMainWindow):
         self.displayOptGrpBx.setLayout(self.dispOptLayout)
 
         self.optionsLayout = QVBoxLayout()
-        self.optionsLayout.setAlignment(Qt.AlignCenter)
+        self.optionsLayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.settingsGroup = QGroupBox("Image Processing")
         self.settingsLayout = QGridLayout()
         self.settingsGroup.setLayout(self.settingsLayout)
@@ -220,7 +220,7 @@ class XRayViewerGUI(QMainWindow):
         self.buttonsLayout.addWidget(self.nextFileButton,2,1,1,1)
         self.buttonsLayout.addWidget(self.filenameLineEdit,3,0,1,2)
 
-        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.displayOptGrpBx.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.optionsLayout.addWidget(self.displayOptGrpBx)
         self.optionsLayout.addSpacing(10)
         self.optionsLayout.addWidget(self.settingsGroup)
@@ -690,7 +690,7 @@ class XRayViewerGUI(QMainWindow):
                     msg.setStandardButtons(QMessageBox.Ok)
                     msg.setWindowTitle("Measure a Distance")
                     msg.setStyleSheet("QLabel{min-width: 500px;}")
-                    msg.exec_()
+                    msg.exec()
             self.refreshAllTabs()
     
     def measureDistChecked2(self):
@@ -717,7 +717,7 @@ class XRayViewerGUI(QMainWindow):
                 msg.setStandardButtons(QMessageBox.Ok)
                 msg.setWindowTitle("Measure a Distance")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
-                msg.exec_()
+                msg.exec()
             self.refreshAllTabs()
 
     def setSliceChecked(self):
@@ -858,7 +858,7 @@ class XRayViewerGUI(QMainWindow):
                 msg.setWindowTitle("Double Zoom Guide")
                 msg.setStyleSheet("QLabel{min-width: 500px;}")
                 msg.setCheckBox(dontShowAgainDoubleZoomMessage)
-                msg.exec_()
+                msg.exec()
                 self.dontShowAgainDoubleZoomMessageResult = dontShowAgainDoubleZoomMessage.isChecked()
             self.doubleZoomMode = False
             return
@@ -1398,7 +1398,7 @@ class XRayViewerGUI(QMainWindow):
         Preprocess folder of the file and process current image
         :param newFile: full name of selected file
         """
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         self.filePath, self.imgList, self.currentFileNumber, self.fileList, self.ext = getImgFiles(str(newFile))
         if self.filePath is not None and self.imgList is not None and self.imgList:
             self.numberOfFiles = len(self.imgList)
@@ -1543,7 +1543,7 @@ class XRayViewerGUI(QMainWindow):
                        "Send Feedback or Issues : <br>" +
                        "<a href='{0}'>{0}</a><br><br>".format("https://github.com/biocatiit/musclex/issues"))
         msgBox.setStandardButtons(QMessageBox.Ok)
-        msgBox.exec_()
+        msgBox.exec()
 
     def statusPrint(self, text):
         """
